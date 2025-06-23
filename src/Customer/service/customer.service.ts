@@ -7,7 +7,7 @@ export class CustomerServie{
 
     constructor(private prisma:PrismaService){}
 
-    async createCustomer(customer:Prisma.customerCreateInput){
+    async createCustomer(customer:Prisma.CustomerCreateInput){
         let get_customer=await this.getCustomerByEmail(customer.customer_email);
         if(get_customer){
              throw new UnauthorizedException("Email already exits")
@@ -23,7 +23,7 @@ export class CustomerServie{
         return await this.prisma.customer.findUnique({where:{customer_id:id}})
     }
 
-    async updateCustomer(customer:Prisma.customerUpdateInput){
+    async updateCustomer(customer:Prisma.CustomerUpdateInput){
          let get_customer=await this.getCustomerByEmail(customer.customer_email as string);
         if(!get_customer){
             throw new UnauthorizedException("Id not found")

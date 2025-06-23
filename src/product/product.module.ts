@@ -7,7 +7,8 @@ import { PrismaModule } from "src/prisma/prisma.module";
 @Module({
     imports:[PrismaModule],
     controllers:[ProductController],
-    providers:[ProductService]
+    providers:[ProductService],
+    exports:[ProductService]
 })
 export class ProductModule{
 

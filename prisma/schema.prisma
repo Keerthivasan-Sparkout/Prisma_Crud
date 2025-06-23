@@ -14,15 +14,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model product{
+model Product{
   pro_id Int @id() @default(autoincrement())
-  pro_nmae String
+  pro_nmae String @unique()
   pro_price Int
-  orderId Order[]
+  orders Products_Orders[]
 
 }
 
-model customer{
+model Customer{
   customer_id Int @id() @default(autoincrement())
   customer_name String
   customer_email String @unique()
@@ -31,12 +31,18 @@ model customer{
 
 model Order{
   order_id Int @id() @default(autoincrement())
-  ordered_products product[] 
-  customer_detail customer @relation(fields:[customerId],references:[customer_id])
+  customer_detail Customer @relation(fields:[customerId],references:[customer_id])
   customerId Int @unique()
-  
+  products Products_Orders[] 
 }
 
-model products_orders{
+model Products_Orders{
   
+  pro Product @relation(fields:[proId],references:[pro_id])
+  proId Int 
+  ord Order @relation(fields:[orderId],references:[order_id])
+  orderId Int 
+  quantity Int @default(1)
+
+  @@unique([proId,orderId])
 }

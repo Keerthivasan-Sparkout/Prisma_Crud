@@ -8,7 +8,7 @@ export class ProductService{
 
     constructor(private prisma:PrismaService){}
 
-    async createProduct(pro:Prisma.productCreateInput){        
+    async createProduct(pro:Prisma.ProductCreateInput){        
         
       return await this.prisma.product.create({data:pro})
     }
@@ -21,7 +21,7 @@ export class ProductService{
        return product;
     }
 
-    async updateProduct(id:number,pro:Prisma.productUpdateInput){
+    async updateProduct(id:number,pro:Prisma.ProductUpdateInput){
         let product= this.prisma.product.findUnique({where :{pro_id:id}})
         if(product==null){
              throw new UnauthorizedException("Id not found")
@@ -37,6 +37,12 @@ export class ProductService{
         return await this.prisma.product.findMany()
     }
 
-    
+     async getProductByName(name:string){
+       let product=await this.prisma.product.findUnique({where :{pro_nmae:name}})
+       if(!product){
+         throw new UnauthorizedException("Id not found")
+       }
+       return product;
+    }
 
 }
